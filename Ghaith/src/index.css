@@ -1,0 +1,57 @@
+
+:root {
+  --shop-primary: #f59e0b;
+  --shop-primary-hover: #d97706;
+  --shop-primary-fg: #ffffff;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.btn-shop {
+  background-color: var(--shop-primary);
+  color: var(--shop-primary-fg);
+  border: none;
+}
+.btn-shop:hover, .btn-shop:active {
+  background-color: var(--shop-primary-hover);
+  color: var(--shop-primary-fg);
+}
+
+.btn-shop-outline {
+  background-color: #e9ecef;
+  color: #212529;
+  border: none;
+}
+.btn-shop-outline:hover {
+  background-color: #dee2e6;
+}
+
+.btn-filter.active {
+  background-color: var(--shop-primary);
+  color: var(--shop-primary-fg);
+  border-color: var(--shop-primary);
+}
+
+.menu-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.order-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+.qty-btn {
+  border: none;
+  background: transparent;
+  padding: 2px 8px;
+  color: #6c757d;
+  cursor: pointer;
+}
+.qty-btn:hover {
+  color: #212529;
+}
