@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>Smart Study Space</title>
+    <link rel="stylesheet" href="book.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+    <header class="navbar">
+        <h2>📘 Smart Study Space</h2>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Book Seat</a>
+            <a href="#">Coffee Shop</a>
+            <a href="#">Subscriptions</a>
+            <a href="#">Loyalty</a>
+            <button class="admin-btn">Admin Panel</button>
+        </nav>
+    </header>
+        <div class="container">
+            <aside class="sidebar">
+                <div class="card">
+                    <h3>Live Status</h3>
+                    <div class="status-row">
+                    <span>Status</span>
+                    <span class="open">● Open</span>
+                    </div>
+                    <div class="status-row">
+                    <span>Available Seats</span>
+                    <strong id="availableSeats">12</strong>
+                    </div>
+                    <div class="status-row">
+                    <span>Total Seats</span>
+                    <strong>30</strong>
+                    </div>
+                    <div class="progress">
+                    <div class="progress-bar"></div>
+                    </div>
+                    <p class="progress-text">40% Available</p>
+                </div>
+                <div class="card">
+                    <h3>Busy Hours Today</h3>
+                    <div id="busyHours"></div>
+                </div>
+            </aside>
+            <main class="main">
+             <h1>Book Your Study Seat</h1>
+                <div class="card">
+                    <h3>Reserve Your Seat</h3>
+                <div id="warningMessage" class="warning-message" style="display:none;"></div>
+                <div id="bookingMessage" class="booking-message" style="display:none;">
+                    Booking confirmed! See you soon.
+                </div>
+                <label>
+                <span class="material-symbols-outlined">calendar_today</span>
+                Select Date
+                </label>
+                <input type="date">
+                <label>
+                <span class="material-symbols-outlined">schedule</span>
+                Select Time
+                </label>
+                <select id="timeSelect"></select>
+                <label>
+                <span class="material-symbols-outlined">group</span>
+                Number of People
+                </label>
+                <select id="peopleSelect">
+                <option value="1">1 Person</option>
+                <option value="2">2 People</option>
+                <option value="3">3 People</option>
+                <option value="4">4 People</option>
+                <option value="5">5 People</option>
+                </select>
+                <label>
+                <span class="material-symbols-outlined">timer</span>
+                Select Duration
+                </label>
+                <div class="duration">
+                    <div class="duration-card active">
+                        <h3>1 Hour</h3>
+                        <p>Perfect for quick study</p>
+                    </div>
+                    <div class="duration-card">
+                        <h3>2 Hours</h3>
+                        <p>Deep focus session</p>
+                    </div>
+                </div>
+                <button class="confirm" onclick="confirmBooking()">
+                <span class="material-symbols-outlined">check_circle</span>
+                Confirm Booking
+                </button>
+                <div class="booking-info">
+                    <h4>Booking Information</h4>
+                    <ul>
+                    <li>You can modify or cancel your booking up to 30 minutes before</li>
+                    <li>Free WiFi and power outlets available at all seats</li>
+                    </ul>
+                </div>
+                </div>
+            </main>
+        </div>
+     <script src="book.js"></script>
+    </body>
+</html>
