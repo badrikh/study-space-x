@@ -1,0 +1,380 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f4f6fb;
+  font-family: Arial, sans-serif;
+  color: #1e2540;
+}
+
+.pricing-section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.mini-title {
+  
+  font-size: 15px;
+  font-weight: bold;
+  color: #3f6edb;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.section-header h1 {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #5f6785;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ================= BANNER ================= */
+
+.banner {
+  width: 85%;
+  margin: 0 auto 30px;
+  background: linear-gradient(to right, #03133f, #0c2a73);
+  color: white;
+  padding: 26px 28px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 25px rgba(6, 20, 70, 0.18);
+}
+
+.banner-text strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.banner-text p {
+  font-size: 14px;
+  color: #d8e6ff;
+}
+
+.banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 191, 255, 0.14);
+  color: #19c7ff;
+  border: 1px solid rgba(25, 199, 255, 0.45);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ================= CARDS ================= */
+
+.pricing-container {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.card {
+  width: 290px;
+  border-radius: 24px;
+  padding: 26px 18px 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  min-height: 640px;
+  position: relative;
+}
+
+.light-card {
+  background: linear-gradient(to bottom, #f8faff, #eef3ff);
+  border: 1px solid #e3e9f7;
+}
+
+.featured-card {
+  background: linear-gradient(to bottom, #0f2f7a, #1d4fa3);
+  color: white;
+  transform: translateY(-10px);
+  border: 1px solid #4f7fd8;
+  box-shadow: 0 12px 30px rgba(50, 70, 160, 0.2);
+}
+
+/* ================= BADGE ================= */
+
+.badge {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, #f5d29c, #e6b86c);
+  color: #4e331d;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ================= ICONS ================= */
+
+.top-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 26px auto 18px;
+  font-size: 24px;
+}
+
+/* ☕ الكوب (التعديل الجديد) */
+.first-icon {
+  background: linear-gradient(to bottom, #fdf3ea, #f3e4d6);
+  color: #d96a1f;
+}
+
+/* ⭐ الكارد المميز */
+.featured-icon {
+  background: rgba(255, 255, 255, 0.14);
+  color: #7fd8ff;
+}
+
+/* ⏰ الثالث */
+.third-icon {
+  background: #eef4ff;
+  color: #5a8df0;
+}
+
+/* ================= TEXT ================= */
+
+.card h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.desc {
+  text-align: center;
+  color: #6a7392;
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.featured-card .desc {
+  color: #dbe7ff;
+}
+
+/* ================= PRICE ================= */
+
+.price-box {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.price {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.old-price {
+  font-size: 24px;
+  text-decoration: line-through;
+  margin-left: 8px;
+  opacity: 0.7;
+}
+
+.save-box {
+  margin: 0 auto 16px;
+  background-color: #1ec8ff;
+  color: #08214f;
+  padding: 7px 14px;
+  border-radius: 18px;
+  font-size: 12px;
+  width: fit-content;
+  font-weight: bold;
+}
+
+/* ================= FEATURES ================= */
+
+.features-box {
+  background: #ffffff;
+  border: 1px solid #eef2fb;
+  border-radius: 18px;
+  padding: 18px 14px;
+  margin-top: auto;
+}
+
+.featured-features {
+  background: rgba(10, 28, 78, 0.4);
+}
+
+.features-box ul {
+  list-style: none;
+}
+
+.features-box ul li {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.features-box ul li i {
+  color: #4f7fd8;
+}
+
+.featured-features ul li {
+  color: white;
+}
+
+.featured-features ul li i {
+  color: #7fd3ff;
+}
+
+/* ================= BUTTON ================= */
+
+button {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  background-color: #0c1f52;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.featured-btn {
+  background: linear-gradient(to right, #00b7ff, #2f7cff);
+}
+
+.note {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* ================= INCLUDE ================= */
+
+.include-section {
+  width: 90%;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.include-section h2 {
+  margin-bottom: 25px;
+}
+
+.include-cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.include-item {
+  width: 260px;
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 25px 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px;
+  font-size: 20px;
+}
+
+.icon-blue {
+  background: linear-gradient(to bottom, #eef4ff, #dbe7ff);
+  color: #2f5bd3;
+}
+
+.icon-purple {
+  background: linear-gradient(to bottom, #f2eeff, #e4dcff);
+  color: #7a4fd8;
+}
+
+.icon-green {
+  background: linear-gradient(to bottom, #eefcf5, #d8f5e6);
+  color: #2ea86b;
+}
+
+.include-item h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.include-item p {
+  font-size: 14px;
+  color: #6a7392;
+  line-height: 1.5;
+}
+
+.support-text {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #5f6785;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+  .pricing-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .featured-card {
+    transform: translateY(0);
+  }
+
+  .banner {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .banner-badge {
+    align-self: flex-start;
+  }
+
+  .section-header h1 {
+    font-size: 32px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 340px;
+  }
+}
