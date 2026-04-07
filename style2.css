@@ -1,0 +1,92 @@
+body {
+  background: #f4f6fb;
+  font-family: Arial;
+}
+
+.container {
+  width: 90%;
+  margin: 40px auto;
+}
+
+.tabs {
+  display: flex;
+  background: white;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.tab-btn {
+  text-decoration: none;
+  padding: 12px 25px;
+  color: #333;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.table-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.plan-purple {
+  background: #eee;
+  color: purple;
+}
+
+.plan-green {
+  background: #d4f8e8;
+  color: green;
+}
+
+.status-active {
+  background: #d4f8e8;
+  color: green;
+}
+
+.status-expired {
+  background: #f8d4d4;
+  color: red;
+}
+
+.student-name {
+  font-weight: bold;
+}
+
+.student-email {
+  color: gray;
+  font-size: 12px;
+}

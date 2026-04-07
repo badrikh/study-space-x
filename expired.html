@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Expired Subscriptions</title>
+  <link rel="stylesheet" href="style2.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-bar">
+    <div class="tabs">
+      <a href="subscriptions.html" class="tab-btn">ALL</a>
+      <a href="active.html" class="tab-btn">ACTIVE</a>
+      <a href="expired.html" class="tab-btn active">EXPIRED</a>
+    </div>
+
+    <div class="search-box">
+      <input type="text" placeholder="Search subscriptions..." />
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Plan</th>
+          <th>Period</th>
+          <th>Remaining</th>
+          <th>Status</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <div class="student-name">Fatima Ahmed</div>
+            <div class="student-email">fatima@email.com</div>
+          </td>
+          <td><span class="badge plan-purple">10-Day Study Pass</span></td>
+          <td>2/20/2026<br><span class="muted">to 3/6/2026</span></td>
+          <td>0 days</td>
+          <td><span class="badge status-expired">Expired</span></td>
+          <td>$45</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

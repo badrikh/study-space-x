@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Active Subscriptions</title>
+  <link rel="stylesheet" href="style2.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-bar">
+    <div class="tabs">
+      <a href="subscriptions.html" class="tab-btn">ALL</a>
+      <a href="active.html" class="tab-btn active">ACTIVE</a>
+      <a href="expired.html" class="tab-btn">EXPIRED</a>
+    </div>
+
+    <div class="search-box">
+      <input type="text" placeholder="Search subscriptions..." />
+    </div>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Plan</th>
+          <th>Period</th>
+          <th>Remaining</th>
+          <th>Status</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>
+            <div class="student-name">Ahmed Ali</div>
+            <div class="student-email">ahmed@email.com</div>
+          </td>
+          <td><span class="badge plan-purple">10-Day Study Pass</span></td>
+          <td>3/1/2026<br><span class="muted">to 3/15/2026</span></td>
+          <td>9 days</td>
+          <td><span class="badge status-active">Active</span></td>
+          <td>$45</td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="student-name">Omar Hassan</div>
+            <div class="student-email">omar@email.com</div>
+          </td>
+          <td><span class="badge plan-green">Hourly Package - 20 Hours</span></td>
+          <td>2/25/2026<br><span class="muted">to 3/27/2026</span></td>
+          <td>12 hours</td>
+          <td><span class="badge status-active">Active</span></td>
+          <td>$30</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
