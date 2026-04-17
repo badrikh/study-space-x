@@ -16,11 +16,11 @@ function Home() {
 }
 
 function Layout() {
-  const location = useLocation(); // ✅ داخل Router لأن Layout بتتrender جوا Router
+  const location = useLocation();
   const hideNavbar = location.pathname === "/login";
 
   return (
-    <main className="min-h-screen bg-slate-50 font-sans">
+    <main className="min-vh-100 bg-light">
       {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -33,7 +33,7 @@ function Layout() {
 export default function App() {
   return (
     <Router>
-      <Layout /> {/* ✅ Layout جوا Router */}
+      <Layout />
     </Router>
   );
 }
