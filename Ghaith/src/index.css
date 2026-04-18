@@ -1,0 +1,89 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+.menu-card-clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.menu-card-clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+:root {
+  --shop-primary: #f59e0b;
+  --shop-primary-hover: #d97706;
+  --shop-primary-fg: #ffffff;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.btn.btn-shop,
+button.btn-shop {
+  background-color: var(--shop-primary) !important;
+  color: var(--shop-primary-fg) !important;
+  border: none !important;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn.btn-shop:hover,
+.btn.btn-shop:focus,
+.btn.btn-shop:active,
+button.btn-shop:hover,
+button.btn-shop:focus,
+button.btn-shop:active {
+  background-color: var(--shop-primary-hover) !important;
+  color: var(--shop-primary-fg) !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4) !important;
+}
+
+.btn.btn-shop-outline,
+button.btn-shop-outline {
+  background-color: #e9ecef !important;
+  color: #212529 !important;
+  border: none !important;
+  transition: background-color 0.2s ease;
+}
+.btn.btn-shop-outline:hover,
+.btn.btn-shop-outline:focus,
+button.btn-shop-outline:hover,
+button.btn-shop-outline:focus {
+  background-color: #ced4da !important;
+  color: #212529 !important;
+}
+
+
+.btn-filter.active {
+  background-color: var(--shop-primary) !important;
+  color: var(--shop-primary-fg) !important;
+  border-color: var(--shop-primary) !important;
+}
+
+
+.menu-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+
+.order-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+
+.qty-btn {
+  border: none;
+  background: transparent;
+  padding: 2px 8px;
+  color: #6c757d;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.qty-btn:hover {
+  color: #212529;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
