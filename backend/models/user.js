@@ -1,5 +1,8 @@
 'use strict';
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
@@ -10,7 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name: DataTypes.STRING,
     email: DataTypes.STRING,
+<<<<<<< Updated upstream
     phoneNumber: DataTypes.STRING
+=======
+    phoneNumber: DataTypes.STRING,
+    password: DataTypes.STRING  // ✅ أضفنا password
+>>>>>>> Stashed changes
   }, {
     sequelize,
     modelName: 'User',

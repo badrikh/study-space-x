@@ -1,4 +1,5 @@
 'use strict';
+<<<<<<< Updated upstream
 
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -17,6 +18,28 @@ module.exports = {
     ]);
 
     // ================= ADMINS =================
+=======
+const bcrypt = require('bcrypt');
+
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    const now = new Date();
+
+    const hashedPassword = await bcrypt.hash('password123', 10);
+
+    // ================= USERS =================
+    await queryInterface.bulkInsert('Users', [
+      { id: 1, name: 'Ahmad Khalil', email: 'ahmad@gmail.com', phoneNumber: '0599123451', password: hashedPassword, createdAt: now, updatedAt: now },
+      { id: 2, name: 'Sara Ali', email: 'sara@gmail.com', phoneNumber: '0599123452', password: hashedPassword, createdAt: now, updatedAt: now },
+      { id: 3, name: 'Omar Yasin', email: 'omar@gmail.com', phoneNumber: '0599123453', password: hashedPassword, createdAt: now, updatedAt: now },
+      { id: 4, name: 'Lina Hasan', email: 'lina@gmail.com', phoneNumber: '0599123454', password: hashedPassword, createdAt: now, updatedAt: now },
+      { id: 5, name: 'Khaled Nasser', email: 'khaled@gmail.com', phoneNumber: '0599123455', password: hashedPassword, createdAt: now, updatedAt: now },
+      { id: 6, name: 'Maya Said', email: 'maya@gmail.com', phoneNumber: '0599123456', password: hashedPassword, createdAt: now, updatedAt: now },
+      { id: 7, name: 'Yousef Ali', email: 'yousef@gmail.com', phoneNumber: '0599123457', password: hashedPassword, createdAt: now, updatedAt: now }
+    ]);
+
+    // ================= ADMINS ================= (بدون تعديل هلأ)
+>>>>>>> Stashed changes
     await queryInterface.bulkInsert('Admins', [
       { id: 1, name: 'Main Admin', email: 'admin1@restaurant.com', createdAt: now, updatedAt: now },
       { id: 2, name: 'Admin 2', email: 'admin2@restaurant.com', createdAt: now, updatedAt: now },
@@ -83,7 +106,11 @@ module.exports = {
     ]);
   },
 
+<<<<<<< Updated upstream
   async down (queryInterface, Sequelize) {
+=======
+  async down(queryInterface, Sequelize) {
+>>>>>>> Stashed changes
     await queryInterface.bulkDelete('Payments', null, {});
     await queryInterface.bulkDelete('Bookings', null, {});
     await queryInterface.bulkDelete('Orders', null, {});
