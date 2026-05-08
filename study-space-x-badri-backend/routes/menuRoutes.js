@@ -1,0 +1,10 @@
+const express = require("express");
+const router = express.Router();
+const menuController = require("../controllers/menuController.js");
+
+router.get("/", menuController.getAllmenu);
+router.get("/:id", menuController.getmenuById);
+router.post("/", menuController.createMenu);
+router.delete("/:id", menuController.deleteMenu);
+
+module.exports = router;
