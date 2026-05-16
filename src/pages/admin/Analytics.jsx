@@ -1,3 +1,51 @@
+<<<<<<< HEAD
+import axios from "axios";
+import { useEffect, useState } from "react";
+import AdminNavbar from "../../components/AdminNavbar";
+import { Brain, Lightbulb, TrendingUp, Users } from "lucide-react";
+
+const COLORS = ["#3f7bf1", "#8a63f5", "#1abc87"];
+
+const fallbackAnalytics = {
+  seatUtilization: {
+    chartData: [
+      { label: "Morning (8-12)", value: 0 },
+      { label: "Afternoon (12-5)", value: 0 },
+      { label: "Evening (5-9)", value: 0 },
+    ],
+    analysis: {
+      insight: "Failed to load seat utilization data.",
+      recommendation: "Check backend connection or CORS.",
+    },
+  },
+  weeklyDemand: {
+    chartData: [
+      { day: "Sun", bookings: 0, orders: 0 },
+      { day: "Mon", bookings: 0, orders: 0 },
+      { day: "Tue", bookings: 0, orders: 0 },
+      { day: "Wed", bookings: 0, orders: 0 },
+      { day: "Thu", bookings: 0, orders: 0 },
+      { day: "Fri", bookings: 0, orders: 0 },
+      { day: "Sat", bookings: 0, orders: 0 },
+    ],
+    analysis: {
+      insight: "Failed to load weekly demand data.",
+      recommendation: "Check backend connection.",
+    },
+  },
+  coffeePerformance: {
+    chartData: {
+      totalRevenue: 0,
+      totalOrders: 0,
+      averageOrderValue: 0,
+    },
+    analysis: {
+      insight: "Failed to load coffee performance data.",
+      recommendation: "Check backend connection.",
+    },
+  },
+};
+=======
 import AdminNavbar from "../../components/AdminNavbar";
 import {
   Brain,
@@ -80,6 +128,7 @@ const seatData = [
   { label: "Afternoon (12-5)", value: 85, color: "#8a63f5" },
   { label: "Evening (5-9)", value: 92, color: "#1abc87" },
 ];
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
 
 function buildSmoothPath(points) {
   if (!points.length) return "";
@@ -118,14 +167,26 @@ function LineChart({
 
   const pointsForSeries = (values, max) =>
     values.map((value, index) => ({
+<<<<<<< HEAD
+      x: left + (innerWidth / (values.length - 1 || 1)) * index,
+      y: top + innerHeight - (value / (max || 1)) * innerHeight,
+=======
       x: left + (innerWidth / (values.length - 1)) * index,
       y: top + innerHeight - (value / max) * innerHeight,
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
       value,
     }));
 
   const normalizedSeries = series.map((item) => ({
     ...item,
+<<<<<<< HEAD
+    points: pointsForSeries(
+      item.data,
+      item.axis === "right" ? rightMax : leftMax
+    ),
+=======
     points: pointsForSeries(item.data, item.axis === "right" ? rightMax : leftMax),
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
   }));
 
   return (
@@ -138,6 +199,30 @@ function LineChart({
           <h3 className="ai-chart-title mb-0">{series[0]?.title}</h3>
         </div>
 
+<<<<<<< HEAD
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          className="ai-chart-svg wide"
+          aria-hidden="true"
+        >
+          {leftTicks.map((tick) => {
+            const y = top + innerHeight - (tick / (leftMax || 1)) * innerHeight;
+            return (
+              <g key={`left-${tick}`}>
+                <line
+                  x1={left}
+                  y1={y}
+                  x2={width - right}
+                  y2={y}
+                  className="grid-line"
+                />
+                <text
+                  x={left - 10}
+                  y={y + 5}
+                  textAnchor="end"
+                  className="axis-text"
+                >
+=======
         <svg viewBox={`0 0 ${width} ${height}`} className="ai-chart-svg wide" aria-hidden="true">
           {leftTicks.map((tick) => {
             const y = top + innerHeight - (tick / leftMax) * innerHeight;
@@ -145,6 +230,7 @@ function LineChart({
               <g key={`left-${tick}`}>
                 <line x1={left} y1={y} x2={width - right} y2={y} className="grid-line" />
                 <text x={left - 10} y={y + 5} textAnchor="end" className="axis-text">
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
                   {tick}
                 </text>
               </g>
@@ -152,17 +238,64 @@ function LineChart({
           })}
 
           {labels.map((label, index) => {
+<<<<<<< HEAD
+            const x = left + (innerWidth / (labels.length - 1 || 1)) * index;
+            return (
+              <g key={label}>
+                <line
+                  x1={x}
+                  y1={top}
+                  x2={x}
+                  y2={top + innerHeight}
+                  className="grid-line vertical"
+                />
+                <text
+                  x={x}
+                  y={height - 12}
+                  textAnchor="middle"
+                  className="axis-text"
+                >
+=======
             const x = left + (innerWidth / (labels.length - 1)) * index;
             return (
               <g key={label}>
                 <line x1={x} y1={top} x2={x} y2={top + innerHeight} className="grid-line vertical" />
                 <text x={x} y={height - 12} textAnchor="middle" className="axis-text">
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
                   {label}
                 </text>
               </g>
             );
           })}
 
+<<<<<<< HEAD
+          <line
+            x1={left}
+            y1={top}
+            x2={left}
+            y2={top + innerHeight}
+            className="focus-line"
+          />
+          <line
+            x1={left}
+            y1={top + innerHeight}
+            x2={width - right}
+            y2={top + innerHeight}
+            className="focus-line"
+          />
+
+          {rightTicks
+            ? rightTicks.map((tick) => {
+                const y =
+                  top + innerHeight - (tick / (rightMax || 1)) * innerHeight;
+                return (
+                  <text
+                    key={`right-${tick}`}
+                    x={width - right + 8}
+                    y={y + 5}
+                    className="axis-text"
+                  >
+=======
           <line x1={left} y1={top} x2={left} y2={top + innerHeight} className="focus-line" />
           <line x1={left} y1={top + innerHeight} x2={width - right} y2={top + innerHeight} className="focus-line" />
 
@@ -171,6 +304,7 @@ function LineChart({
                 const y = top + innerHeight - (tick / rightMax) * innerHeight;
                 return (
                   <text key={`right-${tick}`} x={width - right + 8} y={y + 5} className="axis-text">
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
                     {tick}
                   </text>
                 );
@@ -184,7 +318,17 @@ function LineChart({
                 className={`${item.pathClass} ${item.dashed ? "dashed" : ""}`}
               />
               {item.points.map((point, index) => (
+<<<<<<< HEAD
+                <circle
+                  key={`${item.name}-${index}`}
+                  cx={point.x}
+                  cy={point.y}
+                  r="6.5"
+                  className={item.pointClass}
+                />
+=======
                 <circle key={`${item.name}-${index}`} cx={point.x} cy={point.y} r="6.5" className={item.pointClass} />
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
               ))}
             </g>
           ))}
@@ -204,7 +348,11 @@ function LineChart({
   );
 }
 
+<<<<<<< HEAD
+function PieChartCard({ seatData, analysis }) {
+=======
 function PieChartCard() {
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
   return (
     <article className="card ai-chart-card h-100">
       <div className="card-body ai-chart-card-body">
@@ -212,11 +360,40 @@ function PieChartCard() {
           <span className="ai-title-icon green">
             <Users size={24} />
           </span>
+<<<<<<< HEAD
+          <h3 className="ai-chart-title mb-0">
+            Seat Utilization by Time Period
+          </h3>
+=======
           <h3 className="ai-chart-title mb-0">Seat Utilization by Time Period</h3>
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
         </div>
 
         <div className="ai-pie-wrap">
           <div className="ai-pie-chart" />
+<<<<<<< HEAD
+
+          <span className="ai-pie-label ai-label-blue">
+            {seatData[0]?.label}: {seatData[0]?.value}%
+          </span>
+
+          <span className="ai-pie-label ai-label-purple">
+            {seatData[1]?.label}: {seatData[1]?.value}%
+          </span>
+
+          <span className="ai-pie-label ai-label-green">
+            {seatData[2]?.label}: {seatData[2]?.value}%
+          </span>
+        </div>
+
+        <div className="ai-seat-legend-grid">
+          {seatData.map((item, index) => (
+            <div className="ai-seat-legend-card" key={item.label}>
+              <span
+                className="ai-seat-legend-dot"
+                style={{ backgroundColor: COLORS[index] }}
+              />
+=======
           <span className="ai-pie-label ai-label-blue">Morning (8-12): 65%</span>
           <span className="ai-pie-label ai-label-purple">Afternoon (12-5): 85%</span>
           <span className="ai-pie-label ai-label-green">Evening (5-9): 92%</span>
@@ -226,17 +403,143 @@ function PieChartCard() {
           {seatData.map((item) => (
             <div className="ai-seat-legend-card" key={item.label}>
               <span className="ai-seat-legend-dot" style={{ backgroundColor: item.color }} />
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
               <span className="ai-seat-legend-name">{item.label}</span>
               <strong className="ai-seat-legend-value">{item.value}%</strong>
             </div>
           ))}
         </div>
+<<<<<<< HEAD
+
+        <p className="ai-chart-footer mt-4">{analysis?.insight}</p>
+        <p className="ai-chart-footer green-accent">
+          {analysis?.recommendation}
+        </p>
+=======
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
       </div>
     </article>
   );
 }
 
 export default function AdminAnalytics() {
+<<<<<<< HEAD
+  const [analytics, setAnalytics] = useState(null);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  const fetchAnalytics = async () => {
+   try {
+  const response = await axios.get("http://localhost:3000/ai-analytics");
+  console.log("FULL RESPONSE:", response);        // ← أضف هاد
+  console.log("RESPONSE DATA:", response.data);   // ← وهاد
+  setAnalytics(response.data);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchAnalytics();
+}, []);
+ if (loading) {
+  return <h1>Loading AI Analytics...</h1>;
+}
+
+if (!analytics) {
+  return <h1>No analytics data found</h1>;
+}
+
+  const seatData = analytics.seatUtilization?.chartData || [];
+  const weeklyData = analytics.weeklyDemand?.chartData || [];
+  const coffeeData = analytics.coffeePerformance?.chartData || {};
+
+  const weeklyLabels = weeklyData.map((item) => item.day);
+  const bookingSeries = weeklyData.map((item) => item.bookings);
+  const coffeeSeries = weeklyData.map((item) => item.orders);
+  const predictionSeries = bookingSeries.map((value) => Math.round(value * 1.1));
+
+  const maxWeeklyValue = Math.max(
+    5,
+    ...bookingSeries,
+    ...coffeeSeries,
+    ...predictionSeries
+  );
+
+  const coffeeLabels = ["Revenue", "Orders", "Avg Order"];
+  const coffeePerformanceSeries = [
+    coffeeData.totalRevenue || 0,
+    coffeeData.totalOrders || 0,
+    coffeeData.averageOrderValue || 0,
+  ];
+
+  const maxCoffeeValue = Math.max(100, ...coffeePerformanceSeries);
+
+  const avgOccupancy =
+    seatData.length > 0
+      ? Math.round(
+          seatData.reduce((sum, item) => sum + Number(item.value || 0), 0) /
+            seatData.length
+        )
+      : 0;
+
+  const totalBookings = bookingSeries.reduce((sum, item) => sum + item, 0);
+
+  const statCards = [
+    {
+      title: "Avg. Occupancy Rate",
+      value: `${avgOccupancy}%`,
+      note: "Based on real bookings",
+      noteClass: "text-primary",
+    },
+    {
+      title: "Total Bookings",
+      value: totalBookings,
+      note: "This week",
+      noteClass: "text-violet",
+    },
+    {
+      title: "Coffee Orders",
+      value: coffeeData.totalOrders || 0,
+      note: "From real orders",
+      noteClass: "text-warning-custom",
+    },
+    {
+      title: "Avg. Order Value",
+      value: `$${coffeeData.averageOrderValue || 0}`,
+      note: "Revenue / orders",
+      noteClass: "text-success-custom",
+    },
+  ];
+
+  const insightCards = [
+    {
+      title: "Seat Utilization Insight",
+      body: analytics.seatUtilization?.analysis?.recommendation,
+      badge: "AI Advice",
+      tone: "yellow",
+      icon: Users,
+    },
+    {
+      title: "Weekly Demand Insight",
+      body: analytics.weeklyDemand?.analysis?.recommendation,
+      badge: "AI Advice",
+      tone: "pink",
+      icon: TrendingUp,
+    },
+    {
+      title: "Coffee Sales Opportunity",
+      body: analytics.coffeePerformance?.analysis?.recommendation,
+      badge: "AI Advice",
+      tone: "yellow",
+      icon: Lightbulb,
+    },
+  ];
+
+=======
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
   return (
     <div className="app-bg ai-analytics-page">
       <AdminNavbar />
@@ -248,7 +551,13 @@ export default function AdminAnalytics() {
           </div>
           <div>
             <h2 className="ai-hero-title mb-1">AI-Powered Analytics</h2>
+<<<<<<< HEAD
+            <p className="ai-hero-subtitle mb-0">
+              Advanced insights and predictive analysis
+            </p>
+=======
             <p className="ai-hero-subtitle mb-0">Advanced insights and predictive analysis</p>
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
           </div>
         </section>
 
@@ -259,7 +568,13 @@ export default function AdminAnalytics() {
                 <div className="card-body ai-stat-card-body">
                   <h3 className="ai-stat-title">{card.title}</h3>
                   <div className="ai-stat-value">{card.value}</div>
+<<<<<<< HEAD
+                  <div className={`ai-stat-note ${card.noteClass}`}>
+                    {card.note}
+                  </div>
+=======
                   <div className={`ai-stat-note ${card.noteClass}`}>{card.note}</div>
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
                 </div>
               </article>
             </div>
@@ -277,6 +592,10 @@ export default function AdminAnalytics() {
           <div className="row g-4">
             {insightCards.map((item) => {
               const Icon = item.icon;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
               return (
                 <div className="col-12 col-lg-6" key={item.title}>
                   <article className={`ai-insight-card ${item.tone}`}>
@@ -286,8 +605,17 @@ export default function AdminAnalytics() {
                       </span>
                       <h3 className="ai-insight-title">{item.title}</h3>
                     </div>
+<<<<<<< HEAD
+
+                    <p className="ai-insight-body mb-3">{item.body}</p>
+
+                    <span className={`priority-badge ${item.tone}`}>
+                      {item.badge}
+                    </span>
+=======
                     <p className="ai-insight-body mb-3">{item.body}</p>
                     <span className={`priority-badge ${item.tone}`}>{item.badge}</span>
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
                   </article>
                 </div>
               );
@@ -297,14 +625,26 @@ export default function AdminAnalytics() {
 
         <section className="row g-4 mb-4">
           <div className="col-12">
+<<<<<<< HEAD
+            <PieChartCard
+              seatData={seatData}
+              analysis={analytics.seatUtilization?.analysis}
+            />
+=======
             <PieChartCard />
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
           </div>
 
           <div className="col-12 col-xl-6">
             <LineChart
               labels={weeklyLabels}
+<<<<<<< HEAD
+              leftTicks={[0, 1, 2, 3, 4, 5, maxWeeklyValue]}
+              leftMax={maxWeeklyValue}
+=======
               leftTicks={[0, 40, 80, 120, 160]}
               leftMax={160}
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
               series={[
                 {
                   title: "Weekly Demand & Forecast",
@@ -331,13 +671,26 @@ export default function AdminAnalytics() {
                   dashed: true,
                 },
               ]}
+<<<<<<< HEAD
+              footer={analytics.weeklyDemand?.analysis?.recommendation}
+=======
               footer="Tuesday and Thursday show highest demand. AI recommends preparing extra inventory."
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
             />
           </div>
 
           <div className="col-12 col-xl-6">
             <LineChart
               labels={coffeeLabels}
+<<<<<<< HEAD
+              leftTicks={[0, 100, 200, 300, maxCoffeeValue]}
+              leftMax={maxCoffeeValue}
+              series={[
+                {
+                  title: "Coffee Shop Performance",
+                  name: "Performance",
+                  data: coffeePerformanceSeries,
+=======
               leftTicks={[0, 95, 190, 285, 380]}
               rightTicks={[0, 15, 30, 45, 60]}
               leftMax={380}
@@ -347,11 +700,16 @@ export default function AdminAnalytics() {
                   title: "Coffee Shop Performance",
                   name: "Revenue ($)",
                   data: revenueSeries,
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
                   pathClass: "line-green",
                   pointClass: "point-green",
                   legendClass: "green",
                   iconTone: "orange",
                 },
+<<<<<<< HEAD
+              ]}
+              footer={analytics.coffeePerformance?.analysis?.recommendation}
+=======
                 {
                   name: "Orders",
                   data: ordersSeries,
@@ -362,6 +720,7 @@ export default function AdminAnalytics() {
                 },
               ]}
               footer="+12% revenue growth this week. Average order value: $6.50"
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
               footerAccent="green-accent"
             />
           </div>
@@ -369,4 +728,8 @@ export default function AdminAnalytics() {
       </main>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7dae78a8f65253d517de2ce34e63c6d04facd36f
