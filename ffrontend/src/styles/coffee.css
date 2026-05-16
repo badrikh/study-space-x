@@ -1,0 +1,423 @@
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+:root {
+    --shop-primary: #2563eb;
+    --shop-primary-hover: #1e40af;
+    --shop-primary-fg: #ffffff;
+    --space-cyan: #22d3ee;
+    --space-blue: #2563eb;
+    --space-surface: rgba(255, 255, 255, 0.08);
+    --space-border: rgba(255, 255, 255, 0.14);
+    --space-text-muted: rgba(255, 255, 255, 0.66);
+}
+body {
+  color: rgba(0, 0, 0, 0.72) !important;}
+
+.index-page {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 30%),
+    radial-gradient(circle at top right, rgba(233, 236, 239, 0.7), transparent 34%),
+    linear-gradient(180deg, #dfe4e8 0, #e9ecef 190px, #e9ecef 320px, #f8f9fa 320px, #f8f9fa 100%);
+}
+
+.index-page-content {
+  padding-top: 9rem !important;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.index-page-content h1 {
+  color: #000000;
+  text-shadow: none;
+}
+
+.index-page-content p.text-muted {
+  color: rgba(0, 0, 0, 0.72) !important;
+}
+
+/* Navbar + Login */
+.custom-navbar-shell,
+.custom-navbar-mobile,
+.login-card {
+  background: rgba(10, 18, 30, 0.62);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--space-border);
+}
+
+.custom-navbar-shell {
+  min-height: 72px;
+}
+
+.custom-navbar-logo {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--space-cyan), var(--space-blue));
+}
+
+.custom-navbar-accent,
+.custom-navbar-admin-icon,
+.login-eyebrow {
+  color: var(--space-cyan);
+}
+
+.custom-navbar-link {
+  color: var(--space-text-muted) !important;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.custom-navbar-link:hover,
+.custom-navbar-link:focus-visible,
+.custom-navbar-link.is-active {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.custom-navbar-login {
+  background: #00e5ff !important;
+  color: #000 !important;
+  border: none !important;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.custom-navbar-login:hover,
+.custom-navbar-login:focus-visible {
+  background: #00cce6 !important;
+  color: #000 !important;
+  transform: translateY(-1px);
+}
+
+.custom-navbar-admin,
+.custom-navbar-toggle {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.custom-navbar-admin:hover,
+.custom-navbar-admin:focus-visible,
+.custom-navbar-toggle:hover,
+.custom-navbar-toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.custom-navbar-toggle {
+  width: 42px;
+  height: 42px;
+}
+
+.custom-navbar-mobile {
+  box-shadow: 0 24px 60px rgba(5, 10, 18, 0.35);
+}
+
+.login-page {
+  background:
+    radial-gradient(circle at top, rgba(34, 211, 238, 0.22), transparent 26%),
+    linear-gradient(160deg, #08111c 0%, #0e2236 48%, #132e46 100%);
+}
+
+.login-card {
+  max-width: 520px;
+}
+
+/* Coffee Page */
+.index-page .coffee-shell {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coffee-heading {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coffee-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.coffee-layout:has(.coffee-order-panel) {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+}
+
+.coffee-menu {
+  min-width: 0;
+}
+
+.coffee-filters {
+  justify-content: center;
+  padding: 0;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 999px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Category Buttons */
+.index-page .btn.category-filter {
+  width: auto;
+  min-width: 92px;
+  flex: 0 0 auto;
+  border-width: 1px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.25rem 1.2rem !important;
+  min-height: 28px;
+  border-radius: 999px !important;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+/* selected category */
+.index-page .btn.category-filter.btn-shop,
+.index-page .btn.category-filter.btn-shop:hover,
+.index-page .btn.category-filter.btn-shop:focus,
+.index-page .btn.category-filter.btn-shop:active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* selected category stays blue */
+.index-page .btn.category-filter.btn-shop:hover,
+.index-page .btn.category-filter.btn-shop:focus,
+.index-page .btn.category-filter.btn-shop:active {
+  background-color: var(--shop-primary) !important;
+  color: var(--shop-primary-fg) !important;
+  border: 1px solid var(--shop-primary) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28) !important;
+  transform: translateY(-1px);
+}
+
+/* unselected category */
+.index-page .btn.category-filter.btn-outline-secondary {
+  color: #334155 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+/* unselected category hover */
+.index-page .btn.category-filter.btn-outline-secondary:hover,
+.index-page .btn.category-filter.btn-outline-secondary:focus {
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+  border: 1px solid #6c757d !important;
+  box-shadow: none !important;
+  transform: translateY(-1px);
+}
+
+/* Main Shop Buttons */
+.btn.btn-shop,
+button.btn-shop {
+  background-color: var(--shop-primary) !important;
+  color: var(--shop-primary-fg) !important;
+  border: 1px solid var(--shop-primary) !important;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--bs-border-radius-pill) !important;
+}
+
+.btn.btn-shop:not(.category-filter):hover,
+.btn.btn-shop:not(.category-filter):focus,
+.btn.btn-shop:not(.category-filter):active,
+button.btn-shop:not(.category-filter):hover,
+button.btn-shop:not(.category-filter):focus,
+button.btn-shop:not(.category-filter):active {
+  background-color: var(--shop-primary-hover) !important;
+  color: var(--shop-primary-fg) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+}
+
+.btn.btn-shop-outline,
+button.btn-shop-outline {
+  background-color: #e9ecef !important;
+  color: #212529 !important;
+  border: none !important;
+  transition: background-color 0.2s ease;
+}
+
+.btn.btn-shop-outline:hover,
+.btn.btn-shop-outline:focus,
+button.btn-shop-outline:hover,
+button.btn-shop-outline:focus {
+  background-color: #ced4da !important;
+  color: #212529 !important;
+}
+
+/* Menu Cards */
+.menu-card-clickable {
+  cursor: pointer;
+  overflow: hidden;
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  display: block !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  border-radius: 6px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.menu-card-clickable:hover,
+.menu-card-clickable:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.28) !important;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12) !important;
+  outline: none;
+}
+
+.menu-card-img {
+  width: 100%;
+  height: 235px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.index-page .menu-card-clickable .card-body {
+  padding: 1rem !important;
+  min-height: 0 !important;
+}
+
+.index-page .card-title {
+  color: #0f172a;
+}
+
+.menu-card-title-row {
+  margin-bottom: 1.4rem;
+}
+
+/* Order Sidebar */
+.order-sidebar {
+  position: static;
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  display: block !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12) !important;
+}
+
+.coffee-order-panel {
+  min-width: 0;
+}
+
+.order-sidebar .card-body {
+  padding: 1.5rem;
+}
+
+.order-sidebar .btn {
+  width: 100%;
+}
+
+.qty-btn {
+  border: none;
+  background: transparent;
+  padding: 2px 8px;
+  color: #6c757d;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.qty-btn:hover {
+  color: #212529;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 575.98px) {
+  .index-page-content {
+    padding-top: 8rem !important;
+  }
+
+  .coffee-filters {
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .index-page .btn.category-filter {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 0;
+  }
+}
+
+.btn.btn-shop, button.btn-shop {
+    background-color: var(--shop-primary) !important;
+    color: var(--shop-primary-fg) !important;
+    border: none !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (max-width: 991.98px) {
+  .coffee-layout,
+  .coffee-layout:has(.coffee-order-panel) {
+    grid-template-columns: 1fr;
+  }
+}
+/* FINAL FIX FOR CATEGORY BUTTONS */
+.index-page .coffee-filters .btn.category-filter {
+  width: auto !important;
+  
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 0.28rem 1.45rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  border-radius: 999px !important;
+  border-width: 1px !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* الزر المختار */
+.index-page .coffee-filters .btn.category-filter.btn-shop,
+.index-page .coffee-filters .btn.category-filter.btn-shop:hover,
+.index-page .coffee-filters .btn.category-filter.btn-shop:focus,
+.index-page .coffee-filters .btn.category-filter.btn-shop:active,
+.index-page .coffee-filters .btn.category-filter.btn-shop:focus-visible {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+.index-page .coffee-filters .btn.category-filter.btn-outline-secondary {
+  background-color: transparent !important;
+  color: #334155 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+
+.index-page .coffee-filters .btn.category-filter.btn-outline-secondary:hover,
+.index-page .coffee-filters .btn.category-filter.btn-outline-secondary:focus {
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+  border: 1px solid #6c757d !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}

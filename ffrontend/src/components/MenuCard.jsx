@@ -1,0 +1,44 @@
+export default function MenuCard({ name, price, image, onAdd }) {
+  return (
+    <div
+      className="card shadow-sm menu-card-clickable"
+      role="button"
+      tabIndex={0}
+      onClick={onAdd}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onAdd();
+        }
+      }}
+    >
+      <img
+        src={image}
+        alt={name}
+        className="card-img-top menu-card-img"
+        loading="lazy"
+        width={640}
+        height={512}
+      />
+
+      <div className="card-body">
+        <div className="d-flex justify-content-between align-items-center menu-card-title-row">
+          <h6 className="card-title fw-semibold mb-0">{name}</h6>
+          <span className="fw-semibold" style={{ color: "var(--shop-primary)" }}>
+            ${price.toFixed(2)}
+          </span>
+        </div>
+
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            onAdd();
+          }}
+          className="btn btn-shop w-100"
+        >
+          + Add to Cart
+        </button>
+      </div>
+    </div>
+  );
+}
