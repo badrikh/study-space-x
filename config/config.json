@@ -1,0 +1,13 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "space",
+    "host": "localhost",
+    "port": 3306,
+    "dialect": "mysql",
+    "migrationStorageTableName": "SequelizeMeta"
+  }
+}
+
+
