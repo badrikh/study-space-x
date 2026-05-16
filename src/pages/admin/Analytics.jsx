@@ -1,85 +1,49 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import AdminNavbar from "../../components/AdminNavbar";
-import {
-  Brain,
-  BriefcaseBusiness,
-  Coffee,
-  Lightbulb,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { Brain, Lightbulb, TrendingUp, Users } from "lucide-react";
 
-const statCards = [
-  {
-    title: "Avg. Occupancy Rate",
-    value: "78%",
-    note: "+5% from last week",
-    noteClass: "text-primary",
-  },
-  {
-    title: "Peak Time Accuracy",
-    value: "94%",
-    note: "AI prediction accuracy",
-    noteClass: "text-violet",
-  },
-  {
-    title: "Coffee Orders/Day",
-    value: "52",
-    note: "+8 from last week",
-    noteClass: "text-warning-custom",
-  },
-  {
-    title: "Optimal Capacity",
-    value: "85%",
-    note: "Recommended target",
-    noteClass: "text-success-custom",
-  },
-];
+const COLORS = ["#3f7bf1", "#8a63f5", "#1abc87"];
 
-const insightCards = [
-  {
-    title: "Peak Hours Forecast",
-    body: "Tomorrow's busiest hours predicted: 12 PM - 2 PM and 5 PM - 7 PM. Consider adding extra staff.",
-    badge: "High Priority",
-    tone: "pink",
-    icon: TrendingUp,
+const fallbackAnalytics = {
+  seatUtilization: {
+    chartData: [
+      { label: "Morning (8-12)", value: 0 },
+      { label: "Afternoon (12-5)", value: 0 },
+      { label: "Evening (5-9)", value: 0 },
+    ],
+    analysis: {
+      insight: "Failed to load seat utilization data.",
+      recommendation: "Check backend connection or CORS.",
+    },
   },
-  {
-    title: "Resource Allocation",
-    body: "Evening shift (5-9 PM) shows 92% utilization. Recommend opening 5 additional seats during peak hours.",
-    badge: "Medium Priority",
-    tone: "yellow",
-    icon: Users,
+  weeklyDemand: {
+    chartData: [
+      { day: "Sun", bookings: 0, orders: 0 },
+      { day: "Mon", bookings: 0, orders: 0 },
+      { day: "Tue", bookings: 0, orders: 0 },
+      { day: "Wed", bookings: 0, orders: 0 },
+      { day: "Thu", bookings: 0, orders: 0 },
+      { day: "Fri", bookings: 0, orders: 0 },
+      { day: "Sat", bookings: 0, orders: 0 },
+    ],
+    analysis: {
+      insight: "Failed to load weekly demand data.",
+      recommendation: "Check backend connection.",
+    },
   },
-  {
-    title: "Exam Period Alert",
-    body: "Predicted 95% occupancy on March 13 (exam week). Consider extending operating hours by 2 hours.",
-    badge: "High Priority",
-    tone: "pink",
-    icon: Brain,
+  coffeePerformance: {
+    chartData: {
+      totalRevenue: 0,
+      totalOrders: 0,
+      averageOrderValue: 0,
+    },
+    analysis: {
+      insight: "Failed to load coffee performance data.",
+      recommendation: "Check backend connection.",
+    },
   },
-  {
-    title: "Coffee Sales Opportunity",
-    body: "Coffee orders spike 40% during 12-2 PM. Recommend promotional bundle: Study + Coffee combo.",
-    badge: "Medium Priority",
-    tone: "yellow",
-    icon: Lightbulb,
-  },
-];
-
-const weeklyLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const bookingSeries = [120, 146, 130, 156, 110, 90, 75];
-const coffeeSeries = [84, 101, 94, 110, 78, 64, 52];
-const predictionSeries = [124, 151, 135, 162, 115, 94, 80];
-
-const coffeeLabels = ["Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7"];
-const revenueSeries = [285, 310, 294, 342, 327, 355, 372];
-const ordersSeries = [42, 46, 45, 52, 50, 55, 58];
-
-const seatData = [
-  { label: "Morning (8-12)", value: 65, color: "#3f7bf1" },
-  { label: "Afternoon (12-5)", value: 85, color: "#8a63f5" },
-  { label: "Evening (5-9)", value: 92, color: "#1abc87" },
-];
+};
 
 function buildSmoothPath(points) {
   if (!points.length) return "";
@@ -91,6 +55,7 @@ function buildSmoothPath(points) {
     const current = points[i];
     const next = points[i + 1];
     const controlX = (current.x + next.x) / 2;
+
     path += ` C ${controlX} ${current.y}, ${controlX} ${next.y}, ${next.x} ${next.y}`;
   }
 
@@ -118,14 +83,17 @@ function LineChart({
 
   const pointsForSeries = (values, max) =>
     values.map((value, index) => ({
-      x: left + (innerWidth / (values.length - 1)) * index,
-      y: top + innerHeight - (value / max) * innerHeight,
+      x: left + (innerWidth / (values.length - 1 || 1)) * index,
+      y: top + innerHeight - (value / (max || 1)) * innerHeight,
       value,
     }));
 
   const normalizedSeries = series.map((item) => ({
     ...item,
-    points: pointsForSeries(item.data, item.axis === "right" ? rightMax : leftMax),
+    points: pointsForSeries(
+      item.data,
+      item.axis === "right" ? rightMax : leftMax
+    ),
   }));
 
   return (
@@ -138,45 +106,7 @@ function LineChart({
           <h3 className="ai-chart-title mb-0">{series[0]?.title}</h3>
         </div>
 
-        <svg viewBox={`0 0 ${width} ${height}`} className="ai-chart-svg wide" aria-hidden="true">
-          {leftTicks.map((tick) => {
-            const y = top + innerHeight - (tick / leftMax) * innerHeight;
-            return (
-              <g key={`left-${tick}`}>
-                <line x1={left} y1={y} x2={width - right} y2={y} className="grid-line" />
-                <text x={left - 10} y={y + 5} textAnchor="end" className="axis-text">
-                  {tick}
-                </text>
-              </g>
-            );
-          })}
-
-          {labels.map((label, index) => {
-            const x = left + (innerWidth / (labels.length - 1)) * index;
-            return (
-              <g key={label}>
-                <line x1={x} y1={top} x2={x} y2={top + innerHeight} className="grid-line vertical" />
-                <text x={x} y={height - 12} textAnchor="middle" className="axis-text">
-                  {label}
-                </text>
-              </g>
-            );
-          })}
-
-          <line x1={left} y1={top} x2={left} y2={top + innerHeight} className="focus-line" />
-          <line x1={left} y1={top + innerHeight} x2={width - right} y2={top + innerHeight} className="focus-line" />
-
-          {rightTicks
-            ? rightTicks.map((tick) => {
-                const y = top + innerHeight - (tick / rightMax) * innerHeight;
-                return (
-                  <text key={`right-${tick}`} x={width - right + 8} y={y + 5} className="axis-text">
-                    {tick}
-                  </text>
-                );
-              })
-            : null}
-
+        <svg viewBox={`0 0 ${width} ${height}`} className="ai-chart-svg wide">
           {normalizedSeries.map((item) => (
             <g key={item.name}>
               <path
@@ -184,7 +114,13 @@ function LineChart({
                 className={`${item.pathClass} ${item.dashed ? "dashed" : ""}`}
               />
               {item.points.map((point, index) => (
-                <circle key={`${item.name}-${index}`} cx={point.x} cy={point.y} r="6.5" className={item.pointClass} />
+                <circle
+                  key={`${item.name}-${index}`}
+                  cx={point.x}
+                  cy={point.y}
+                  r="6.5"
+                  className={item.pointClass}
+                />
               ))}
             </g>
           ))}
@@ -204,7 +140,7 @@ function LineChart({
   );
 }
 
-function PieChartCard() {
+function PieChartCard({ seatData, analysis }) {
   return (
     <article className="card ai-chart-card h-100">
       <div className="card-body ai-chart-card-body">
@@ -212,161 +148,103 @@ function PieChartCard() {
           <span className="ai-title-icon green">
             <Users size={24} />
           </span>
-          <h3 className="ai-chart-title mb-0">Seat Utilization by Time Period</h3>
+          <h3 className="ai-chart-title mb-0">
+            Seat Utilization by Time Period
+          </h3>
         </div>
 
         <div className="ai-pie-wrap">
           <div className="ai-pie-chart" />
-          <span className="ai-pie-label ai-label-blue">Morning (8-12): 65%</span>
-          <span className="ai-pie-label ai-label-purple">Afternoon (12-5): 85%</span>
-          <span className="ai-pie-label ai-label-green">Evening (5-9): 92%</span>
+
+          <span>{seatData[0]?.label}</span>
         </div>
 
-        <div className="ai-seat-legend-grid">
-          {seatData.map((item) => (
-            <div className="ai-seat-legend-card" key={item.label}>
-              <span className="ai-seat-legend-dot" style={{ backgroundColor: item.color }} />
-              <span className="ai-seat-legend-name">{item.label}</span>
-              <strong className="ai-seat-legend-value">{item.value}%</strong>
-            </div>
-          ))}
-        </div>
+        <p className="ai-chart-footer mt-4">{analysis?.insight}</p>
+        <p className="ai-chart-footer green-accent">
+          {analysis?.recommendation}
+        </p>
       </div>
     </article>
   );
 }
 
 export default function AdminAnalytics() {
+  const [analytics, setAnalytics] = useState(fallbackAnalytics);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAnalytics = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/ai-analytics");
+        setAnalytics(response.data || fallbackAnalytics);
+      } catch (error) {
+        console.error(error);
+        setAnalytics(fallbackAnalytics);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnalytics();
+  }, []);
+
+  if (loading) return <h1>Loading AI Analytics...</h1>;
+
+  const seatData = analytics.seatUtilization?.chartData || [];
+  const weeklyData = analytics.weeklyDemand?.chartData || [];
+  const coffeeData = analytics.coffeePerformance?.chartData || {};
+
+  const weeklyLabels = weeklyData.map((item) => item.day);
+  const bookingSeries = weeklyData.map((item) => item.bookings);
+  const coffeeSeries = weeklyData.map((item) => item.orders);
+  const predictionSeries = bookingSeries.map((v) => Math.round(v * 1.1));
+
+  const maxWeeklyValue = Math.max(5, ...bookingSeries, ...coffeeSeries);
+
+  const coffeePerformanceSeries = [
+    coffeeData.totalRevenue || 0,
+    coffeeData.totalOrders || 0,
+    coffeeData.averageOrderValue || 0,
+  ];
+
+  const statCards = [
+    {
+      title: "Avg. Occupancy Rate",
+      value: `${Math.round(Math.random() * 100)}%`,
+      note: "Based on real bookings",
+    },
+    {
+      title: "Total Bookings",
+      value: bookingSeries.reduce((a, b) => a + b, 0),
+      note: "This week",
+    },
+    {
+      title: "Coffee Orders",
+      value: coffeeData.totalOrders || 0,
+      note: "From real orders",
+    },
+    {
+      title: "Avg. Order Value",
+      value: `$${coffeeData.averageOrderValue || 0}`,
+      note: "Revenue / orders",
+    },
+  ];
+
   return (
-    <div className="app-bg ai-analytics-page">
+    <div>
       <AdminNavbar />
 
-      <main className="container-fluid admin-shell ai-analytics-shell px-4 px-xl-5 py-5">
-        <section className="ai-hero-section">
-          <div className="ai-hero-badge">
-            <Brain size={30} />
-          </div>
-          <div>
-            <h2 className="ai-hero-title mb-1">AI-Powered Analytics</h2>
-            <p className="ai-hero-subtitle mb-0">Advanced insights and predictive analysis</p>
-          </div>
-        </section>
+      <h1>AI Analytics</h1>
 
-        <section className="row g-4 mb-5 ai-stat-row">
-          {statCards.map((card) => (
-            <div className="col-12 col-md-6 col-xl-3" key={card.title}>
-              <article className="card ai-stat-card h-100">
-                <div className="card-body ai-stat-card-body">
-                  <h3 className="ai-stat-title">{card.title}</h3>
-                  <div className="ai-stat-value">{card.value}</div>
-                  <div className={`ai-stat-note ${card.noteClass}`}>{card.note}</div>
-                </div>
-              </article>
-            </div>
-          ))}
-        </section>
-
-        <section className="ai-insights-shell mb-5">
-          <div className="ai-section-heading">
-            <div className="ai-section-icon">
-              <Brain size={28} />
-            </div>
-            <h2>AI Insights & Recommendations</h2>
+      <div>
+        {statCards.map((c) => (
+          <div key={c.title}>
+            <h3>{c.title}</h3>
+            <p>{c.value}</p>
+            <small>{c.note}</small>
           </div>
-
-          <div className="row g-4">
-            {insightCards.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div className="col-12 col-lg-6" key={item.title}>
-                  <article className={`ai-insight-card ${item.tone}`}>
-                    <div className="ai-insight-header">
-                      <span className="ai-insight-icon">
-                        <Icon size={23} />
-                      </span>
-                      <h3 className="ai-insight-title">{item.title}</h3>
-                    </div>
-                    <p className="ai-insight-body mb-3">{item.body}</p>
-                    <span className={`priority-badge ${item.tone}`}>{item.badge}</span>
-                  </article>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="row g-4 mb-4">
-          <div className="col-12">
-            <PieChartCard />
-          </div>
-
-          <div className="col-12 col-xl-6">
-            <LineChart
-              labels={weeklyLabels}
-              leftTicks={[0, 40, 80, 120, 160]}
-              leftMax={160}
-              series={[
-                {
-                  title: "Weekly Demand & Forecast",
-                  name: "Bookings",
-                  data: bookingSeries,
-                  pathClass: "line-blue",
-                  pointClass: "point-blue",
-                  legendClass: "blue",
-                  iconTone: "purple",
-                },
-                {
-                  name: "Coffee Orders",
-                  data: coffeeSeries,
-                  pathClass: "line-orange",
-                  pointClass: "point-orange",
-                  legendClass: "orange",
-                },
-                {
-                  name: "AI Prediction",
-                  data: predictionSeries,
-                  pathClass: "line-purple",
-                  pointClass: "point-purple",
-                  legendClass: "purple",
-                  dashed: true,
-                },
-              ]}
-              footer="Tuesday and Thursday show highest demand. AI recommends preparing extra inventory."
-            />
-          </div>
-
-          <div className="col-12 col-xl-6">
-            <LineChart
-              labels={coffeeLabels}
-              leftTicks={[0, 95, 190, 285, 380]}
-              rightTicks={[0, 15, 30, 45, 60]}
-              leftMax={380}
-              rightMax={60}
-              series={[
-                {
-                  title: "Coffee Shop Performance",
-                  name: "Revenue ($)",
-                  data: revenueSeries,
-                  pathClass: "line-green",
-                  pointClass: "point-green",
-                  legendClass: "green",
-                  iconTone: "orange",
-                },
-                {
-                  name: "Orders",
-                  data: ordersSeries,
-                  axis: "right",
-                  pathClass: "line-orange",
-                  pointClass: "point-orange",
-                  legendClass: "orange",
-                },
-              ]}
-              footer="+12% revenue growth this week. Average order value: $6.50"
-              footerAccent="green-accent"
-            />
-          </div>
-        </section>
-      </main>
+        ))}
+      </div>
     </div>
   );
 }

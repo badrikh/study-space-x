@@ -52,16 +52,7 @@ function HomeFooter() {
           </ul>
         </div>
 
-        <div>
-          <h3>Stay Updated</h3>
-          <p className="home-footer-copy">
-            Get the latest news and offers directly to your inbox.
-          </p>
-          <form className="home-footer-form">
-            <input type="email" placeholder="Email" aria-label="Email address" />
-            <button type="button">Subscribe</button>
-          </form>
-        </div>
+       
       </div>
 
       <div className="container home-footer-bottom">

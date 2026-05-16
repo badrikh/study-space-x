@@ -1,68 +1,49 @@
+import { useState, useEffect } from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const stats = [
-  { title: "Active Subscriptions", value: "3", valueClass: "text-dark" },
-  { title: "Expiring Soon", value: "2", valueClass: "text-warning" },
-  { title: "Expired", value: "2", valueClass: "text-danger" },
-  { title: "Total Revenue", value: "$245", valueClass: "text-success" },
-];
-
-const tabs = [
-  { label: "Active (3)", tone: "active-tab", active: true },
-  { label: "Expired (2)", tone: "expired-tab", active: false },
-];
-
-const subscriptions = [
-  {
-    name: "Ahmed Ali",
-    email: "ahmed.ali@email.com",
-    plan: "10-Day Study Pass",
-    planClass: "plan-tag-purple",
-    periodStart: "3/1/2026",
-    periodEnd: "3/15/2026",
-    remaining: "9 days",
-    status: "Active",
-    price: "$45",
-  },
-  {
-    name: "Omar Hassan",
-    email: "omar.hassan@email.com",
-    plan: "Hourly Package - 20 Hours",
-    planClass: "plan-tag-green",
-    periodStart: "2/25/2026",
-    periodEnd: "3/27/2026",
-    remaining: "12 hours",
-    status: "Active",
-    price: "$30",
-  },
-  {
-    name: "Layla Hassan",
-    email: "layla.h@email.com",
-    plan: "Hourly Package - 20 Hours",
-    planClass: "plan-tag-green",
-    periodStart: "3/1/2026",
-    periodEnd: "3/31/2026",
-    remaining: "18 hours",
-    status: "Active",
-    price: "$30",
-  },
-];
+const API = "http://localhost:3000/api/admin";
 
 export default function AdminSubscriptions() {
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [activeTab, setActiveTab] = useState("active");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    fetch(`${API}/reservations`)
+      .then(res => res.json())
+      .then(data => { if (data.success) setSubscriptions(data.data); })
+      .catch(err => console.error(err));
+  }, []);
+
+  const activeSubscriptions = subscriptions.filter(s => s.status === 'confirmed');
+  const expiredSubscriptions = subscriptions.filter(s => s.status === 'cancelled');
+  const totalRevenue = subscriptions.reduce((sum, s) => sum + (s.Payment?.amount || 0), 0);
+
+  const filteredSubscriptions = subscriptions.filter(sub => {
+    const matchesTab = activeTab === 'active' ? sub.status === 'confirmed' : sub.status === 'cancelled';
+    const query = searchTerm.trim().toLowerCase();
+    const matchesSearch = query === "" || sub.User?.name?.toLowerCase().includes(query) || sub.User?.email?.toLowerCase().includes(query);
+    return matchesTab && matchesSearch;
+  });
+
+  const stats = [
+    { title: "Active Subscriptions", value: activeSubscriptions.length, valueClass: "text-dark" },
+    { title: "Expiring Soon", value: 0, valueClass: "text-warning" },
+    { title: "Expired", value: expiredSubscriptions.length, valueClass: "text-danger" },
+    { title: "Total Revenue", value: `$${totalRevenue}`, valueClass: "text-success" },
+  ];
+
   return (
     <div className="subscription-page">
       <AdminNavbar />
-
       <main className="page-content container-fluid py-4 py-lg-5">
         <section className="hero-copy">
           <h2 className="page-title mb-2">Subscription Management</h2>
-          <p className="page-subtitle mb-0">
-            Track and manage all student subscriptions
-          </p>
+          <p className="page-subtitle mb-0">Track and manage all student subscriptions</p>
         </section>
 
         <section className="row g-4 mt-1">
-          {stats.map((stat) => (
+          {stats.map(stat => (
             <div className="col-12 col-md-6 col-xl-3" key={stat.title}>
               <div className="sub-stat-card">
                 <div className="sub-stat-title">{stat.title}</div>
@@ -74,26 +55,21 @@ export default function AdminSubscriptions() {
 
         <section className="toolbar-section d-flex flex-column flex-xl-row align-items-xl-center justify-content-between gap-3 gap-xl-4 mt-4">
           <div className="tabs-shell subscription-tabs">
-            {tabs.map((tab) => (
-              <button
-                type="button"
-                key={tab.label}
-                className={`tab-btn subscription-tab ${tab.tone} ${
-                  tab.active ? "active" : ""
-                }`}
-              >
+            {[
+              { key: 'active', label: `Active (${activeSubscriptions.length})` },
+              { key: 'expired', label: `Expired (${expiredSubscriptions.length})` }
+            ].map(tab => (
+              <button key={tab.key} type="button"
+                className={`tab-btn subscription-tab ${activeTab === tab.key ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.key)}>
                 {tab.label}
               </button>
             ))}
           </div>
-
           <div className="search-shell">
             <span className="search-icon">⌕</span>
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search subscriptions..."
-            />
+            <input type="text" className="search-input" placeholder="Search subscriptions..."
+              value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
           </div>
         </section>
 
@@ -103,36 +79,28 @@ export default function AdminSubscriptions() {
               <thead>
                 <tr>
                   <th>STUDENT</th>
-                  <th>PLAN</th>
-                  <th>PERIOD</th>
-                  <th>REMAINING</th>
+                  <th>BOOKING DATE</th>
+                  <th>SEAT</th>
                   <th>STATUS</th>
-                  <th>PRICE</th>
+                  <th>PAYMENT</th>
                 </tr>
               </thead>
-
               <tbody>
-                {subscriptions.map((item) => (
-                  <tr key={item.email}>
+                {filteredSubscriptions.map(item => (
+                  <tr key={item.id}>
                     <td>
-                      <div className="student-name">{item.name}</div>
-                      <div className="student-email">{item.email}</div>
+                      <div className="student-name">{item.User?.name || 'Unknown'}</div>
+                      <div className="student-email">{item.User?.email || '-'}</div>
                     </td>
-                    <td>
-                      <span className={`plan-tag ${item.planClass}`}>{item.plan}</span>
-                    </td>
-                    <td>
-                      <div>{item.periodStart}</div>
-                      <div className="period-end">to {item.periodEnd}</div>
-                    </td>
-                    <td>{item.remaining}</td>
+                    <td>{new Date(item.booking_date).toLocaleDateString()}</td>
+                    <td>{item.Seat?.name_of_room || '-'}</td>
                     <td>
                       <span className="status-badge">
                         <span className="status-check">✓</span>
                         {item.status}
                       </span>
                     </td>
-                    <td>{item.price}</td>
+                    <td>{item.Payment ? `$${item.Payment.amount}` : 'N/A'}</td>
                   </tr>
                 ))}
               </tbody>
