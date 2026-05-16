@@ -1,16 +1,18 @@
 'use strict';
-module.exports = {
+export default {
   async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn('Payments', 'bookingId', {
+    await queryInterface.addColumn('payments', 'bookingId', {
       type: Sequelize.INTEGER,
       allowNull: true,
       references: {
-        model: 'Bookings',
+        model: 'bookings',
         key: 'id'
-      }
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Payments', 'bookingId');
+    await queryInterface.removeColumn('payments', 'bookingId');
   }
 };

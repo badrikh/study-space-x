@@ -1,12 +1,17 @@
 import { Sequelize } from "sequelize";
+import "./env.js";
 
 const sequelize = new Sequelize(
   process.env.DB_NAME || "space",
   process.env.DB_USER || "root",
-  process.env.DB_PASSWORD || "Borooj123458**",
+  process.env.DB_PASSWORD || "",
   {
-    host: process.env.DB_HOST || "127.0.0.1",
+    host: process.env.DB_HOST || "localhost",
+    port: Number(process.env.DB_PORT || 3306),
     dialect: "mysql",
+    dialectOptions: {
+      connectTimeout: 10000,
+    },
   }
 );
 

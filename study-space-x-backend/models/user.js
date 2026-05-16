@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
     {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      phone_number: DataTypes.STRING,
       password: DataTypes.STRING,
       role: {
         type: DataTypes.STRING,
@@ -19,10 +19,6 @@ export default (sequelize, DataTypes) => {
   User.associate = function (models) {
     User.hasMany(models.Booking, {
       foreignKey: "userId",
-    });
-
-    User.hasMany(models.Order, {
-      foreignKey: "user_id",
     });
 
     User.hasMany(models.Payment, {

@@ -1,77 +1,55 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
-
 export default {
   async up(queryInterface, Sequelize) {
-
-    await queryInterface.createTable('Orders', {
-
+    await queryInterface.createTable('bookings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-
-      order_name: {
-        type: Sequelize.STRING
-      },
-
-      prices: {
-        type: Sequelize.FLOAT
-      },
-
-      total_cost: {
-        type: Sequelize.FLOAT
-      },
-
-      order_date: {
+      date: {
         type: Sequelize.DATE
       },
-
-      user_id: {
+      people: {
+        type: Sequelize.INTEGER
+      },
+      userId: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        }
       },
-
-      admin_id: {
+      seatId: {
         type: Sequelize.INTEGER,
-        allowNull: true, // مهم عشان ما يوقف المايغريشن
-        // تم حذف الـ foreign key مؤقتاً لتفادي الخطأ
-      },
-
-      menu_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
-          model: 'Menus',
+          model: 'seats',
           key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        }
       },
-
+      timeSlotId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'TimeSlots',
+          key: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
-
     });
-
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Orders');
+    await queryInterface.dropTable('bookings');
   }
 };
