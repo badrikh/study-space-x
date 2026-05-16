@@ -40,9 +40,8 @@ export default function Login() {
       }
 
       // save auth
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("user", JSON.stringify(data.user));
       // redirect based on role (SECURE)
       if (data.user.role === "admin") {
         navigate("/admin");
