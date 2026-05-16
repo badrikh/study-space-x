@@ -26,19 +26,7 @@ export default function StatusBar() {
         </span>
       ),
     },
-    {
-      icon: "fa-chair",
-      label: "Available Seats",
-      bg: "#eff6ff",
-      color: "#3b82f6",
-      hoverBg: "#dbeafe",
-      value: (
-        <span>
-          12 <span className="text-secondary fw-normal fs-6 mx-1">/</span>
-          <span className="text-secondary fs-5">30</span>
-        </span>
-      ),
-    },
+    
     {
       icon: "fa-volume-xmark",
       label: "Quiet Hours",
