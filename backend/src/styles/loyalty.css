@@ -1,0 +1,243 @@
+.loyalty-page {
+  background: radial-gradient(circle at top, rgba(34, 211, 238, 0.12), transparent 28%), #fbf9f0;
+}
+
+.loyalty-wrap {
+  max-width: 1380px;
+  padding-top: 9rem;
+}
+
+.loyalty-heading {
+  color: #0f172a;
+  font-size: 3.25rem;
+  letter-spacing: 0.08em;
+}
+
+.loyalty-subheading {
+  font-size: 1.25rem;
+  color: #5f6b7a !important;
+}
+
+.loyalty-dashboard {
+  display: grid;
+  grid-template-columns: 440px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.loyalty-left-column {
+  grid-row: span 1;
+}
+
+.loyalty-hero-card {
+  min-height: 686px;
+  height: auto !important;
+  padding: 26px 24px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #a21caf 0%, #4f46e5 50%, #2563eb 100%);
+}
+
+.loyalty-points-top {
+  margin-bottom: 36px;
+}
+
+.loyalty-points-label {
+  font-size: 1.8rem;
+}
+
+.loyalty-trophy {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.loyalty-next-reward {
+  margin-top: 24px;
+  font-size: 1.35rem;
+}
+
+.loyalty-next-reward p {
+  max-width: 360px;
+  margin: 26px 0 0;
+  font-size: 1.35rem;
+  line-height: 1.45;
+}
+
+.loyalty-progress {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+.loyalty-progress .progress-bar {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.available-rewards-title {
+  margin: 4px 0 22px;
+  color: #0f172a;
+  font-size: 2.35rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.loyalty-page .loyalty-card-light {
+  width: 100% !important;
+  min-height: 315px !important;
+  height: 100% !important;
+  padding: 0 !important;
+  border-radius: 14px !important;
+  background-color: #fcfcfb;
+  overflow: hidden;
+}
+
+.loyalty-page .loyalty-card-light .card-body {
+  min-height: 315px;
+  padding: 24px !important;
+}
+
+.loyalty-card-top {
+  margin-bottom: 42px;
+}
+
+.loyalty-reward-icon {
+  border-radius: 14px;
+}
+
+.loyalty-card-title {
+  margin: 0 0 18px;
+  color: #17202b;
+  font-size: 1.85rem;
+  line-height: 1.16;
+  letter-spacing: 0.04em;
+}
+
+.loyalty-card-desc {
+  margin: 0 0 28px;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.loyalty-redeem-btn,
+.loyalty-share-btn {
+  width: 100%;
+  min-height: 60px;
+  border-radius: 14px !important;
+}
+
+.loyalty-extra-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 4px;
+}
+
+.loyalty-info-card {
+  min-height: 350px;
+  padding: 28px 24px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.loyalty-info-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 24px;
+  color: #17202b;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.referral-count-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding: 28px 24px;
+  border-radius: 14px;
+  background: #eef4ff;
+}
+
+.referral-count-box strong {
+  color: #1677ff;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.referral-count-box span,
+.referral-points-row span,
+.earn-item p {
+  color: #5f6b7a;
+  font-size: 1.05rem;
+}
+
+.referral-points-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.referral-points-row strong {
+  color: #07844d;
+  font-size: 1.05rem;
+}
+
+.earn-list {
+  display: grid;
+  gap: 26px;
+}
+
+.earn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.earn-item h3 {
+  margin: 0 0 6px;
+  color: #17202b;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.earn-item p {
+  margin: 0;
+}
+
+@media (max-width: 1199.98px) {
+  .loyalty-dashboard {
+    grid-template-columns: 380px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 991.98px) {
+  .loyalty-dashboard,
+  .loyalty-extra-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loyalty-hero-card {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .loyalty-wrap {
+    padding-top: 9.5rem;
+  }
+
+  .loyalty-heading {
+    font-size: 2.35rem;
+  }
+
+  .available-rewards-title {
+    font-size: 1.9rem;
+  }
+}
