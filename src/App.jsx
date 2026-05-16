@@ -12,7 +12,6 @@ import AdminOrders from "./pages/admin/Orders";
 import AdminSubscriptions from "./pages/admin/Subscriptions";
 import AdminAnalytics from "./pages/admin/Analytics";
 
-// ✅ حماية روتس الأدمن
 function AdminRoute({ children }) {
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
