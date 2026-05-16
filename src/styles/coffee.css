@@ -1,17 +1,15 @@
+
 @import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 :root {
-  --shop-primary: #2563eb;
-  --shop-primary-hover: #1e40af;
-  --shop-primary-fg: #ffffff;
-  --space-cyan: #22d3ee;
-  --space-blue: #2563eb;
-  --space-surface: rgba(255, 255, 255, 0.08);
-  --space-border: rgba(255, 255, 255, 0.14);
-  --space-text-muted: rgba(255, 255, 255, 0.66);
+    --shop-primary: #2563eb;
+    --shop-primary-hover: #1e40af;
+    --shop-primary-fg: #ffffff;
+    --space-cyan: #22d3ee;
+    --space-blue: #2563eb;
+    --space-surface: rgba(255, 255, 255, 0.08);
+    --space-border: rgba(255, 255, 255, 0.14);
+    --space-text-muted: rgba(255, 255, 255, 0.66);
 }
-
 body {
   background-color: #f8f9fa;
 }
@@ -38,6 +36,7 @@ body {
   color: rgba(0, 0, 0, 0.72) !important;
 }
 
+/* Navbar + Login */
 .custom-navbar-shell,
 .custom-navbar-mobile,
 .login-card {
@@ -123,27 +122,14 @@ body {
   max-width: 520px;
 }
 
-.menu-card-clickable {
-  cursor: pointer;
-  overflow: hidden;
-  width: 100% !important;
-  min-height: 0 !important;
-  height: auto !important;
-  padding: 0 !important;
-  display: block !important;
-  border: 1px solid rgba(226, 232, 240, 0.95) !important;
-  border-radius: 6px !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-}
-.menu-card-clickable:hover,
-.menu-card-clickable:focus-visible {
-  transform: translateY(-2px);
-  border-color: rgba(37, 99, 235, 0.28) !important;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12) !important;
-  outline: none;
+/* Coffee Page */
+.index-page .coffee-shell {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.index-page .coffee-shell {
+.coffee-heading {
+  max-width: 680px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -163,12 +149,6 @@ body {
   min-width: 0;
 }
 
-.coffee-heading {
-  max-width: 680px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .coffee-filters {
   justify-content: center;
   padding: 0;
@@ -182,31 +162,82 @@ body {
   box-shadow: none;
 }
 
+/* Category Buttons */
 .index-page .btn.category-filter {
   width: auto;
-  min-width: 112px;
+  min-width: 92px;
   flex: 0 0 auto;
   border-width: 1px;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   line-height: 1;
-  padding: 0.28rem 1.45rem !important;
-  min-height: 32px;
+  padding: 0.25rem 1.2rem !important;
+  min-height: 28px;
+  border-radius: 999px !important;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
+/* selected category */
+.index-page .btn.category-filter.btn-shop,
+.index-page .btn.category-filter.btn-shop:hover,
+.index-page .btn.category-filter.btn-shop:focus,
+.index-page .btn.category-filter.btn-shop:active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* selected category stays blue */
+.index-page .btn.category-filter.btn-shop:hover,
+.index-page .btn.category-filter.btn-shop:focus,
+.index-page .btn.category-filter.btn-shop:active {
+  background-color: var(--shop-primary) !important;
+  color: var(--shop-primary-fg) !important;
+  border: 1px solid var(--shop-primary) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28) !important;
+  transform: translateY(-1px);
+}
+
+/* unselected category */
+.index-page .btn.category-filter.btn-outline-secondary {
+  color: #334155 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+}
+
+/* unselected category hover */
+.index-page .btn.category-filter.btn-outline-secondary:hover,
+.index-page .btn.category-filter.btn-outline-secondary:focus {
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+  border: 1px solid #6c757d !important;
+  box-shadow: none !important;
+  transform: translateY(-1px);
+}
+
+/* Main Shop Buttons */
 .btn.btn-shop,
 button.btn-shop {
   background-color: var(--shop-primary) !important;
   color: var(--shop-primary-fg) !important;
-  border: none !important;
+  border: 1px solid var(--shop-primary) !important;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--bs-border-radius-pill) !important;
 }
-.btn.btn-shop:hover,
-.btn.btn-shop:focus,
-.btn.btn-shop:active,
-button.btn-shop:hover,
-button.btn-shop:focus,
-button.btn-shop:active {
+
+.btn.btn-shop:not(.category-filter):hover,
+.btn.btn-shop:not(.category-filter):focus,
+.btn.btn-shop:not(.category-filter):active,
+button.btn-shop:not(.category-filter):hover,
+button.btn-shop:not(.category-filter):focus,
+button.btn-shop:not(.category-filter):active {
   background-color: var(--shop-primary-hover) !important;
   color: var(--shop-primary-fg) !important;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
@@ -219,6 +250,7 @@ button.btn-shop-outline {
   border: none !important;
   transition: background-color 0.2s ease;
 }
+
 .btn.btn-shop-outline:hover,
 .btn.btn-shop-outline:focus,
 button.btn-shop-outline:hover,
@@ -227,13 +259,27 @@ button.btn-shop-outline:focus {
   color: #212529 !important;
 }
 
-
-.btn-filter.active {
-  background-color: var(--shop-primary) !important;
-  color: var(--shop-primary-fg) !important;
-  border-color: var(--shop-primary) !important;
+/* Menu Cards */
+.menu-card-clickable {
+  cursor: pointer;
+  overflow: hidden;
+  width: 100% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  display: block !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  border-radius: 6px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
+.menu-card-clickable:hover,
+.menu-card-clickable:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.28) !important;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12) !important;
+  outline: none;
+}
 
 .menu-card-img {
   width: 100%;
@@ -256,6 +302,7 @@ button.btn-shop-outline:focus {
   margin-bottom: 1.4rem;
 }
 
+/* Order Sidebar */
 .order-sidebar {
   position: static;
   width: 100% !important;
@@ -280,7 +327,6 @@ button.btn-shop-outline:focus {
   width: 100%;
 }
 
-
 .qty-btn {
   border: none;
   background: transparent;
@@ -289,12 +335,14 @@ button.btn-shop-outline:focus {
   cursor: pointer;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
+
 .qty-btn:hover {
   color: #212529;
   background-color: #f0f0f0;
   border-radius: 4px;
 }
 
+/* Responsive */
 @media (max-width: 575.98px) {
   .index-page-content {
     padding-top: 8rem !important;
@@ -311,9 +359,66 @@ button.btn-shop-outline:focus {
   }
 }
 
+.btn.btn-shop, button.btn-shop {
+    background-color: var(--shop-primary) !important;
+    color: var(--shop-primary-fg) !important;
+    border: none !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
 @media (max-width: 991.98px) {
   .coffee-layout,
   .coffee-layout:has(.coffee-order-panel) {
     grid-template-columns: 1fr;
   }
+}
+/* FINAL FIX FOR CATEGORY BUTTONS */
+.index-page .coffee-filters .btn.category-filter {
+  width: auto !important;
+  
+  height: 32px !important;
+  min-height: 32px !important;
+  padding: 0.28rem 1.45rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  border-radius: 999px !important;
+  border-width: 1px !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* الزر المختار */
+.index-page .coffee-filters .btn.category-filter.btn-shop,
+.index-page .coffee-filters .btn.category-filter.btn-shop:hover,
+.index-page .coffee-filters .btn.category-filter.btn-shop:focus,
+.index-page .coffee-filters .btn.category-filter.btn-shop:active,
+.index-page .coffee-filters .btn.category-filter.btn-shop:focus-visible {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: 1px solid #2563eb !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+.index-page .coffee-filters .btn.category-filter.btn-outline-secondary {
+  background-color: transparent !important;
+  color: #334155 !important;
+  border: 1px solid #334155 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+
+.index-page .coffee-filters .btn.category-filter.btn-outline-secondary:hover,
+.index-page .coffee-filters .btn.category-filter.btn-outline-secondary:focus {
+  background-color: #6c757d !important;
+  color: #ffffff !important;
+  border: 1px solid #6c757d !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
 }

@@ -1,20 +1,148 @@
-import { useMemo, useState } from "react"; import UserNavbar from "../components/UserNavbar"; import MenuCard from "../components/MenuCard"; import OrderSidebar from "../components/OrderSidebar";
-const menuItems=[{ name: "Latte", price: 4.5, description: "Smooth espresso with steamed milk", image: new URL("../assets/coffee/latte.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Espresso", price: 3.0, description: "Strong and bold coffee shot", image: new URL("../assets/coffee/espresso.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Cappuccino", price: 4.0, description: "Espresso with foamy milk", image: new URL("../assets/coffee/cappuccino.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Americano", price: 3.5, description: "Espresso diluted with hot water", image: new URL("../assets/coffee/americano.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Mocha", price: 5.0, description: "Espresso with chocolate & cream", image: new URL("../assets/coffee/mocha.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Flat White", price: 4.5, description: "Double espresso with velvety microfoam", image: new URL("../assets/coffee/flat-white.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Affogato", price: 5.5, description: "Vanilla gelato drowned in espresso", image: new URL("../assets/coffee/affogato.jpg", import.meta.url).href, category: "Coffee" },
-  { name: "Hot Tea", price: 2.5, description: "A calming cup of tea", image: new URL("../assets/coffee/hot-tea.jpg", import.meta.url).href, category: "Tea" },
-  { name: "Matcha Latte", price: 5.0, description: "Creamy Japanese matcha latte", image: new URL("../assets/coffee/matcha-latte.jpg", import.meta.url).href, category: "Tea" },
-  { name: "Iced Coffee", price: 4.25, description: "Chilled coffee over ice", image: new URL("../assets/coffee/iced-coffee.jpg", import.meta.url).href, category: "Cold" },
-  { name: "Cold Brew", price: 4.75, description: "Slow steeped cold brew", image: new URL("../assets/coffee/cold-brew.jpg", import.meta.url).href, category: "Cold" },
-  { name: "Croissant", price: 3.5, description: "Buttery flaky pastry", image: new URL("../assets/coffee/croissant.jpg", import.meta.url).href, category: "Bakery" },
-  { name: "Muffin", price: 3.0, description: "Soft fresh baked muffin", image: new URL("../assets/coffee/muffin.jpg", import.meta.url).href, category: "Bakery" },
-  { name: "Brownie", price: 3.25, description: "Rich chocolate brownie", image: new URL("../assets/coffee/brownie.jpg", import.meta.url).href, category: "Bakery" },
-  { name: "Sandwich", price: 6.5, description: "Freshly made savory sandwich", image: new URL("../assets/coffee/sandwich.jpg", import.meta.url).href, category: "Food" },
-  { name: "Avocado Toast", price: 6.0, description: "Crisp toast with avocado", image: new URL("../assets/coffee/avocado-toast.jpg", import.meta.url).href, category: "Food" },
-  { name: "Smoothie", price: 5.5, description: "Fruit smoothie blend", image: new URL("../assets/coffee/smoothie.jpg", import.meta.url).href, category: "Cold" },
-  { name: "Cookie", price: 2.25, description: "Fresh baked cookie", image: new URL("../assets/coffee/cookie.jpg", import.meta.url).href, category: "Bakery" }]; const categories=["All", ...new Set(menuItems.map((item)=>item.category))];
-export default function CoffeeShop(){ const [selectedCategory,setSelectedCategory]=useState("All"); const [orderItems,setOrderItems]=useState([]); const visibleItems=useMemo(()=>selectedCategory==="All"?menuItems:menuItems.filter((item)=>item.category===selectedCategory),[selectedCategory]); const hasOrder=orderItems.length>0; const handleAdd=(product)=>setOrderItems((current)=>{ const existing=current.find((item)=>item.name===product.name); if(existing) return current.map((item)=>item.name===product.name?{...item,quantity:item.quantity+1}:item); return [...current,{name:product.name,price:product.price,quantity:1}]; }); const handleUpdateQty=(name,delta)=>setOrderItems((current)=>current.map((item)=>item.name===name?{...item,quantity:item.quantity+delta}:item).filter((item)=>item.quantity>0)); return <div className="index-page min-vh-100"><UserNavbar absolute /><main className="index-page-content px-3 px-md-4 pb-5"><section className="coffee-shell"><div className="coffee-heading text-center mb-4"><h1 className="display-5 fw-bold mb-2">Coffee Shop</h1><p className="text-muted mb-0">Order your favorite drinks and snacks directly from your study seat.</p></div><div className="coffee-filters d-flex flex-wrap gap-2 mb-4">{categories.map((category)=><button key={category} type="button" onClick={()=>setSelectedCategory(category)} className={`btn category-filter rounded-pill px-4 ${selectedCategory===category?"btn-shop":"btn-outline-secondary"}`}>{category}</button>)}</div><div className="coffee-layout"><div className="coffee-menu"><div className="row g-4">{visibleItems.map((item)=><div key={item.name} className="col-12 col-md-6 col-xl-4"><MenuCard {...item} onAdd={()=>handleAdd(item)} /></div>)}</div></div>{hasOrder&&<aside className="coffee-order-panel"><OrderSidebar items={orderItems} onUpdateQty={handleUpdateQty} /></aside>}</div></section></main></div>; }
+import UserNavbar from "../components/UserNavbar";
+import MenuCard from "../components/MenuCard";
+import OrderSidebar from "../components/OrderSidebar";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+export default function CoffeeShop() {
+  const [categories, setCategories] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [cartItems, setCartItems] = useState( 
+    JSON.parse(localStorage.getItem("cartItems")) || []);
+
+  useEffect(() => {
+    getCategories();
+    getmenuItems();
+  }, []);
+
+  const getCategories = async () => {
+    const response = await axios.get(`http://localhost:3000/categories`);
+    setCategories(response.data);
+  };
+
+  const getmenuItems = async () => {
+    const response = await axios.get(`http://localhost:3000/menus/`);
+    setMenuItems(response.data);
+  };
+
+  const addToCart = (product) => {
+    const existingItem = cartItems.find((item) => item.id === product.id);
+
+    if (existingItem) {
+      const updatedCartItems = cartItems.map((item) => {
+        if (item.id === product.id) {
+          return {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity + 1,
+          };
+        }
+
+        return item;
+      });
+
+      setCartItems(updatedCartItems);
+    } else {
+      setCartItems([
+        ...cartItems,
+        {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: 1,
+        },
+      ]);
+    }
+  };
+  
+
+  const updateQty=(id,chang)=>{
+    const updatedcareItems=cartItems.map((item)=>{
+      if(item.id===id){
+        return{
+           ...item,
+            quantity:item.quantity + chang,
+        }
+      }
+
+      return item;
+    }).filter((item)=>item.quantity>0);
+  setCartItems(updatedcareItems);
+  }
+  const filteredItems =selectedCategory === null? menuItems : 
+  menuItems.filter((item) => item.categoryId === selectedCategory);
+
+    useEffect(() => {
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+}, [cartItems]);
+ 
+
+  return (
+    <div className="index-page min-vh-100">
+      <UserNavbar absolute />
+
+      <main className="index-page-content px-3 px-md-4 pb-5">
+        <section className="coffee-shell">
+          {/* Heading */}
+          <div className="coffee-heading text-center mb-4">
+            <h1 className="display-5 fw-bold mb-2">Coffee Shop</h1>
+            <p className="text-muted mb-0">
+              Order your favorite drinks and snacks directly from your study seat.
+            </p>
+          </div>
+{/* Category Filters */}
+<div className="coffee-filters d-flex flex-wrap gap-2 mb-4">
+  <button
+    onClick={() => setSelectedCategory(null)}
+    type="button"
+    className={`btn category-filter rounded-pill px-4 ${
+      selectedCategory === null ? "btn-shop" : "btn-outline-secondary"
+    }`}
+  >
+    All
+  </button>
+
+  {categories.map((category) => {
+    return (
+      <button
+        key={category.id}
+        type="button"
+        onClick={() => setSelectedCategory(category.id)}
+        className={`btn category-filter rounded-pill px-4 ${
+          selectedCategory === category.id ? "btn-shop" : "btn-outline-secondary"
+        }`}
+      >
+        {category.name}
+      </button>
+    );
+  })}
+</div>
+
+          {/* Layout */}
+          <div className="coffee-layout">
+            {/* Menu Grid */}
+            <div className="coffee-menu">
+              <div className="row g-4">
+                {filteredItems.map((item) => (
+                  <div key={item.name} className="col-12 col-md-6 col-xl-4">
+                    <MenuCard
+                      {...item}
+                      onAdd={() => addToCart(item)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Order Sidebar */}
+            <aside className="coffee-order-panel">
+            <OrderSidebar items={cartItems} onUpdateQty={updateQty} />
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
