@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import "./config/env.js";
 import sequelize from "./config/database.js";
-
+import dotenv from "dotenv";
+dotenv.config();
 // routes
 import menuRoutes from "./routes/menuRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
