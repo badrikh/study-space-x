@@ -1,29 +1,21 @@
 export default (sequelize, DataTypes) => {
-  const Order = sequelize.define(
-    "Order",
-    {
-      order_name: DataTypes.STRING,
-      prices: DataTypes.FLOAT,
-      total_cost: DataTypes.FLOAT,
-      order_date: DataTypes.DATE,
-      user_id: DataTypes.INTEGER,
-      admin_id: DataTypes.INTEGER,
-      menu_id: DataTypes.INTEGER,
-    },
-    {
-      tableName: "orders",
-    }
-  );
+    const Order = sequelize.define(
+        "Order",
+        {
+            order_name: DataTypes.STRING,
+            prices: DataTypes.FLOAT,
+            total_cost: DataTypes.FLOAT,
+            order_date: DataTypes.DATE,
+            booking_id: DataTypes.INTEGER,
+            status: {
+                type: DataTypes.STRING,
+                defaultValue: 'pending'
+            },
+        },
+        {
+            tableName: "orders",
+        }
+    );
 
-  Order.associate = (models) => {
-    Order.belongsTo(models.User, {
-      foreignKey: "user_id",
-    });
-
-    Order.belongsTo(models.Menu, {
-      foreignKey: "menu_id",
-    });
-  };
-
-  return Order;
+    return Order;
 };
