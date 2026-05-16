@@ -23,3 +23,10 @@ export default function verifyToken(req, res, next) {
     return res.status(401).json({ message: "Invalid token" });
   }
 }
+export function isAdmin(req, res, next) {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+ 
+  next();
+}
