@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Booking from "./pages/Booking";
 import CoffeeShop from "./pages/CoffeeShop";
 import UserSubscriptions from "./pages/UserSubscriptions";
+import Payment from "./pages/Payment";
 import Loyalty from "./pages/Loyalty";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminOrders from "./pages/admin/Orders";
@@ -32,9 +33,10 @@ export default function App() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/coffee" element={<CoffeeShop />} />
         <Route path="/subs" element={<UserSubscriptions />} />
+        <Route path="/payment" element={<Payment />} />
         <Route path="/loyalty" element={<Loyalty />} />
 
-        {/* Admin Routes — محمية */}
+        {/* Admin Routes*/}
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />
         <Route path="/admin/subscriptions" element={<AdminRoute><AdminSubscriptions /></AdminRoute>} />
