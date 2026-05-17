@@ -1,65 +1,62 @@
-'use strict';
+import express from "express";
+import cors from "cors";
+import sequelize from "./config/database.js";
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const process = require('process');
+// routes
+import menuRoutes from "./routes/menuRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import seatRoutes from "./routes/seatRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
+import timeSlotRoutes from "./routes/timeSlotRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
-const basename = path.basename(__filename);
+const app = express();
 
-const env = process.env.NODE_ENV || 'development';
-
-const config = require(__dirname + '/../config/config.json')[env];
-
-const db = {};
-
-let sequelize;
-
-if (config.use_env_variable) {
-
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-
-} else {
-
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-
-}
-
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js'
-    );
-
+app.use(
+  cors({
+    origin: /^http:\/\/localhost:\d+$/,
+    credentials: true,
   })
-  .forEach(file => {
+);
 
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+app.use(express.json());
 
-    db[model.name] = model;
+const port = 3000;
 
-  });
-
-Object.keys(db).forEach(modelName => {
-
-  if (db[modelName].associate) {
-
-    db[modelName].associate(db);
-
-  }
-
+// test route
+app.get("/", (req, res) => {
+  res.send("API is running");
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Routes
+app.use("/menus", menuRoutes);
+app.use("/users", userRoutes);
+app.use("/payments", paymentRoutes);
+app.use("/seats", seatRoutes);
+app.use("/bookings", bookingRoutes);
+app.use("/timeslots", timeSlotRoutes);
+app.use("/orders", orderRoutes);
 
-module.exports = db;
+// start server
+async function startServer() {
+  try {
+    await sequelize.authenticate();
+
+    console.log("MySQL connected with Sequelize");
+
+    app.listen(port, () => {
+      console.log(
+        `Server running at http://localhost:${port}`
+        
+      );
+    });
+  } catch (error) {
+    console.log(
+      "Failed to connect to database:",
+      error.message
+    );
+  }
+}
+
+startServer();

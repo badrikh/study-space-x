@@ -1,16 +1,41 @@
-const express = require("express");
-
+import express from "express";
 const router = express.Router();
 
-const bookingController = require("../controllers/bookingController");
+import * as bookingController from "../controllers/bookingController.js";
 
+router.get(
+  "/availability",
+  bookingController.checkAvailability
+);
 
-// GET all bookings
-router.get("/", bookingController.getAllBookings);
+router.get(
+  "/statistics",
+  bookingController.getStatistics
+);
 
+router.get(
+  "/",
+  bookingController.getAllBookings
+);
 
-// CREATE booking
-router.post("/", bookingController.createBooking);
+router.post(
+  "/",
+  bookingController.createBooking
+);
 
+router.get(
+  "/:id",
+  bookingController.getBookingById
+);
 
-module.exports = router;
+router.put(
+  "/:id",
+  bookingController.updateBooking
+);
+
+router.delete(
+  "/:id",
+  bookingController.deleteBooking
+);
+
+export default router;
